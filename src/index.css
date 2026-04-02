@@ -432,18 +432,70 @@ body {
 .btn-confirm-yes { background: var(--red-bg); color: var(--red-text); }
 .btn-confirm-no  { background: var(--row-odd); color: var(--text-muted); }
 
-/* ── Empty state ───────────────────────────────────────────────── */
-.empty-state-cell { background: #fff !important; border: none !important; }
+/* ── Empty States ────────────────────────────────────────────────── */
+.empty-state-cell {
+  padding: 0 !important;
+}
+
 .empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  padding: 56px 20px;
-  color: var(--text-muted);
+  padding: 40px 20px;
+  text-align: center;
 }
-.empty-state p    { font-size: .95rem; font-weight: 600; color: var(--primary); }
-.empty-state span { font-size: .8rem; }
+
+.empty-state-icon {
+  font-size: 36px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.empty-state-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.empty-state-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 280px;
+  line-height: 1.5;
+}
+
+.empty-state-cta {
+  margin-top: 8px;
+  padding: 9px 20px;
+  background: var(--accent);
+  color: var(--primary);
+  border: none;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s;
+}
+.empty-state-cta:hover { background: var(--accent-light); }
+
+.empty-state-ghost {
+  margin-top: 8px;
+  padding: 9px 20px;
+  background: transparent;
+  color: var(--secondary);
+  border: 1.5px solid var(--secondary);
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.empty-state-ghost:hover {
+  background: var(--secondary);
+  color: white;
+}
 
 /* ── Cell Popover ──────────────────────────────────────────────── */
 .cell-popover {
@@ -1138,14 +1190,14 @@ body {
   flex-direction: column;
   gap: 10px;
 }
+/* Mobile empty state */
 .mobile-empty {
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--text-muted);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  padding: 48px 24px;
+  text-align: center;
 }
 
 /* ── Card ──────────────────────────────────────────────────────── */

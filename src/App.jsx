@@ -325,6 +325,10 @@ export default function App() {
               onCellChange={handleCellChange}
               onFieldChange={handleFieldChange}
               onDeleteRow={requestDeleteRow}
+              totalRows={rows.length}
+              filterQuery={filterInput}
+              onClearFilter={() => setFilterInput('')}
+              onAdd={() => setShowModal(true)}
             />
           </div>
           <div className="mobile-only">
@@ -333,6 +337,10 @@ export default function App() {
               onCellChange={handleCellChange}
               onFieldChange={handleFieldChange}
               onDeleteRow={requestDeleteRow}
+              totalRows={rows.length}
+              filterQuery={filterInput}
+              onClearFilter={() => setFilterInput('')}
+              onAdd={() => setShowModal(true)}
             />
           </div>
         </>

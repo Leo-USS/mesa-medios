@@ -20,7 +20,7 @@ function getCellMeta(raw) {
   return { status: 'empty', display: raw, name: '' }
 }
 
-export default function MediaTable({ rows, onCellChange, onFieldChange, onDeleteRow }) {
+export default function MediaTable({ rows, onCellChange, onFieldChange, onDeleteRow, totalRows, filterQuery, onClearFilter, onAdd }) {
   const [popover, setPopover] = useState(null)
   const [editingField, setEditingField] = useState(null)
   const [editValue, setEditValue] = useState('')
@@ -94,14 +94,21 @@ export default function MediaTable({ rows, onCellChange, onFieldChange, onDelete
             {rows.length === 0 ? (
               <tr>
                 <td colSpan={MEDIA_COLS.length + 3} className="empty-state-cell">
-                  <div className="empty-state">
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                      <rect x="6" y="8" width="28" height="24" rx="3" stroke="#ceb37c" strokeWidth="2" fill="none" />
-                      <path d="M13 16h14M13 22h10" stroke="#ceb37c" strokeWidth="1.5" strokeLinecap="round" />
-                    </svg>
-                    <p>No hay contenidos aún.</p>
-                    <span>Haz clic en "Agregar contenido" para empezar.</span>
-                  </div>
+                  {totalRows === 0 ? (
+                    <div className="empty-state">
+                      <span className="empty-state-icon">📋</span>
+                      <p className="empty-state-title">Sin contenidos aún</p>
+                      <span className="empty-state-sub">Agrega el primero para comenzar la planificación</span>
+                      <button className="empty-state-cta" onClick={onAdd}>+ Agregar contenido</button>
+                    </div>
+                  ) : (
+                    <div className="empty-state">
+                      <span className="empty-state-icon">🔍</span>
+                      <p className="empty-state-title">Sin resultados para "{filterQuery}"</p>
+                      <span className="empty-state-sub">Prueba con otro término de búsqueda</span>
+                      <button className="empty-state-ghost" onClick={onClearFilter}>✕ Limpiar búsqueda</button>
+                    </div>
+                  )}
                 </td>
               </tr>
             ) : (

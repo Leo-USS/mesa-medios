@@ -343,16 +343,26 @@ function ContentCard({ row, onCellChange, onFieldChange, onDeleteRow }) {
 }
 
 // ── Main component ──────────────────────────────────────────────
-export default function MobileCardView({ rows, onCellChange, onFieldChange, onDeleteRow }) {
+export default function MobileCardView({ rows, onCellChange, onFieldChange, onDeleteRow, totalRows, filterQuery, onClearFilter, onAdd }) {
   return (
     <div className="mobile-card-view">
       {rows.length === 0 ? (
         <div className="mobile-empty">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <rect x="6" y="8" width="28" height="24" rx="3" stroke="#ceb37c" strokeWidth="2" fill="none" />
-            <path d="M13 16h14M13 22h10" stroke="#ceb37c" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-          <p>No hay contenidos aún.</p>
+          {totalRows === 0 ? (
+            <>
+              <span className="empty-state-icon">📋</span>
+              <p className="empty-state-title">Sin contenidos aún</p>
+              <span className="empty-state-sub">Agrega el primero para comenzar</span>
+              <button className="empty-state-cta" onClick={onAdd}>+ Agregar contenido</button>
+            </>
+          ) : (
+            <>
+              <span className="empty-state-icon">🔍</span>
+              <p className="empty-state-title">Sin resultados para "{filterQuery}"</p>
+              <span className="empty-state-sub">Prueba con otro término</span>
+              <button className="empty-state-ghost" onClick={onClearFilter}>✕ Limpiar búsqueda</button>
+            </>
+          )}
         </div>
       ) : (
         rows.map(row => (
