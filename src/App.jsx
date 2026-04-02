@@ -9,6 +9,7 @@ import AuditLogPanel from './components/AuditLogPanel'
 import USSLoader from './components/USSLoader'
 import Toaster from './components/Toaster'
 import { useToast } from './hooks/useToast'
+import { useDebounce } from './hooks/useDebounce'
 import ConfirmDialog from './components/ConfirmDialog'
 
 // ── Helper: read cell value from new or legacy JSONB format ─────
@@ -51,7 +52,8 @@ export default function App() {
   const [confirmDelete, setConfirmDelete] = useState(null) // null | { id, nombre }
 
   // ── Filter & sort state ─────────────────────────────────────
-  const [filterText,   setFilterText]   = useState('')
+  const [filterInput,  setFilterInput]  = useState('')
+  const filterText = useDebounce(filterInput, 300)
   const [sortDir,      setSortDir]      = useState('asc') // 'asc' | 'desc'
 
   // ── Toast notifications ───────────────────────────────────────
@@ -262,12 +264,12 @@ export default function App() {
           <input
             type="text"
             placeholder="Filtrar contenidos..."
-            value={filterText}
-            onChange={e => setFilterText(e.target.value)}
+            value={filterInput}
+            onChange={e => setFilterInput(e.target.value)}
             className="filter-input"
           />
-          {filterText && (
-            <button className="filter-clear" onClick={() => setFilterText('')}>
+          {filterInput && (
+            <button className="filter-clear" onClick={() => setFilterInput('')}>
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                 <path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
@@ -287,7 +289,7 @@ export default function App() {
           </svg>
           <span>Fecha</span>
         </button>
-        {filterText && (
+        {filterInput && (
           <span className="filter-count">{displayRows.length} de {rows.length}</span>
         )}
       </div>
