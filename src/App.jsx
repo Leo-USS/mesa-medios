@@ -9,6 +9,7 @@ import AuditLogPanel from './components/AuditLogPanel'
 import USSLoader from './components/USSLoader'
 import Toaster from './components/Toaster'
 import { useToast } from './hooks/useToast'
+import ConfirmDialog from './components/ConfirmDialog'
 
 // ── Helper: read cell value from new or legacy JSONB format ─────
 // New format: { valor: "si / Claudia", notas: "..." }
@@ -47,6 +48,7 @@ export default function App() {
   const [error,        setError]        = useState(null)
   const [showModal,    setShowModal]    = useState(false)
   const [showLogs,     setShowLogs]     = useState(false)
+  const [confirmDelete, setConfirmDelete] = useState(null) // null | { id, nombre }
 
   // ── Filter & sort state ─────────────────────────────────────
   const [filterText,   setFilterText]   = useState('')
@@ -202,6 +204,11 @@ export default function App() {
     await logAction('MODIFICAR', rowId, row?.nombre, `Cambió "${field}" → "${value}"`)
   }
 
+  function requestDeleteRow(rowId) {
+    const row = rows.find(r => r.id === rowId)
+    setConfirmDelete({ id: rowId, nombre: row?.nombre || 'este contenido' })
+  }
+
   async function handleDeleteRow(rowId) {
     const row = rows.find(r => r.id === rowId)
     setRows(prev => prev.filter(r => r.id !== rowId))
@@ -305,7 +312,7 @@ export default function App() {
               rows={displayRows}
               onCellChange={handleCellChange}
               onFieldChange={handleFieldChange}
-              onDeleteRow={handleDeleteRow}
+              onDeleteRow={requestDeleteRow}
             />
           </div>
           <div className="mobile-only">
@@ -313,7 +320,7 @@ export default function App() {
               rows={displayRows}
               onCellChange={handleCellChange}
               onFieldChange={handleFieldChange}
-              onDeleteRow={handleDeleteRow}
+              onDeleteRow={requestDeleteRow}
             />
           </div>
         </>
@@ -325,6 +332,14 @@ export default function App() {
 
       {showLogs && (
         <AuditLogPanel onClose={() => setShowLogs(false)} />
+      )}
+
+      {confirmDelete && (
+        <ConfirmDialog
+          nombre={confirmDelete.nombre}
+          onConfirm={() => { handleDeleteRow(confirmDelete.id); setConfirmDelete(null) }}
+          onCancel={() => setConfirmDelete(null)}
+        />
       )}
 
       <Toaster toasts={toasts} onRemove={removeToast} />
