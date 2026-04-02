@@ -148,6 +148,36 @@ export default function App() {
     return () => supabase.removeChannel(channel)
   }, [authorized])
 
+  // ── Keyboard shortcuts ────────────────────────────────────────
+  useEffect(() => {
+    function handleKeyDown(e) {
+      const tag = document.activeElement?.tagName
+      const inInput = tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT'
+
+      // Escape — cierra modales en orden de prioridad
+      if (e.key === 'Escape') {
+        if (confirmDelete) { setConfirmDelete(null); return }
+        if (showModal)     { setShowModal(false);    return }
+        if (showLogs)      { setShowLogs(false);     return }
+      }
+
+      // Ctrl/Cmd + K — focus en búsqueda
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault()
+        document.querySelector('.filter-input')?.focus()
+        return
+      }
+
+      // N — nuevo contenido (solo si no hay input enfocado y no hay modal abierto)
+      if (e.key === 'n' && !inInput && !showModal && !showLogs && !confirmDelete) {
+        setShowModal(true)
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [confirmDelete, showModal, showLogs])
+
   async function fetchRows() {
     setLoading(true)
     const { data, error } = await supabase
@@ -342,6 +372,13 @@ export default function App() {
               onClearFilter={() => setFilterInput('')}
               onAdd={() => setShowModal(true)}
             />
+          </div>
+          <div className="shortcuts-hint desktop-only">
+            <span><kbd>Esc</kbd> cerrar</span>
+            <span>·</span>
+            <span><kbd>Ctrl+K</kbd> buscar</span>
+            <span>·</span>
+            <span><kbd>N</kbd> nuevo</span>
           </div>
         </>
       )}
