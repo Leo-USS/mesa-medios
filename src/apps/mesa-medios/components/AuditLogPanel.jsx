@@ -9,7 +9,7 @@ const ACTION_STYLE = {
 }
 
 function parseDetails(details) {
-  try { return JSON.parse(details) } catch { return {} }
+  try { return JSON.parse(details) || {} } catch { return {} }
 }
 
 function useIsMobile() {
