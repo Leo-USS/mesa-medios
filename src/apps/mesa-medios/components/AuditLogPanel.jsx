@@ -18,7 +18,7 @@ function useIsMobile() {
   return mobile
 }
 
-export default function AuditLogPanel({ onClose }) {
+export default function AuditLogPanel({ onClose, mesaType }) {
   const [logs,    setLogs]    = useState([])
   const [loading, setLoading] = useState(true)
   const [filter,  setFilter]  = useState('TODOS')
@@ -31,16 +31,14 @@ export default function AuditLogPanel({ onClose }) {
 
   useEffect(() => {
     async function fetchLogs() {
-      const { data } = await supabase
-        .from('logs')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(200)
+      let query = supabase.from('logs').select('*')
+      if (mesaType) query = query.eq('mesa_type', mesaType)
+      const { data } = await query.order('created_at', { ascending: false }).limit(200)
       setLogs(data || [])
       setLoading(false)
     }
     fetchLogs()
-  }, [])
+  }, [mesaType])
 
   const filtered = filter === 'TODOS'
     ? logs

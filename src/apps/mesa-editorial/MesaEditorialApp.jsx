@@ -79,6 +79,7 @@ export default function MesaEditorialApp({ session, userName, onLogout, onBackTo
   async function logAction(accion, itemId, itemNombre, detalle = '') {
     if (!session) return
     await supabase.from('logs').insert([{
+      mesa_type:        'editorial',
       user_email:       session.user.email,
       user_nombre:      userName || session.user.email,
       accion,
@@ -264,7 +265,7 @@ export default function MesaEditorialApp({ session, userName, onLogout, onBackTo
       )}
 
       {showModal && <AddActionModal onConfirm={handleAddRow} onClose={() => setShowModal(false)} />}
-      {showLogs && <AuditLogPanel onClose={() => setShowLogs(false)} />}
+      {showLogs && <AuditLogPanel onClose={() => setShowLogs(false)} mesaType="editorial" />}
       {confirmDelete && (
         <ConfirmDialog
           nombre={confirmDelete.nombre}

@@ -85,6 +85,7 @@ export default function MesaMediosApp({ session, userName, onLogout, onBackToSel
   async function logAction(accion, contenidoId, contenidoNombre, detalle = '') {
     if (!session) return
     await supabase.from('logs').insert([{
+      mesa_type:        'medios',
       user_email:       session.user.email,
       user_nombre:      userName || session.user.email,
       accion,
@@ -207,7 +208,7 @@ export default function MesaMediosApp({ session, userName, onLogout, onBackToSel
       )}
 
       {showModal && <AddRowModal onConfirm={handleAddRow} onClose={() => setShowModal(false)} />}
-      {showLogs && <AuditLogPanel onClose={() => setShowLogs(false)} />}
+      {showLogs && <AuditLogPanel onClose={() => setShowLogs(false)} mesaType="medios" />}
       {confirmDelete && (
         <ConfirmDialog nombre={confirmDelete.nombre}
           onConfirm={() => { handleDeleteRow(confirmDelete.id); setConfirmDelete(null) }}
