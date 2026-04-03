@@ -3,22 +3,8 @@ import { supabase } from './apps/shared/utils/supabase'
 import Login from './apps/shared/components/Login'
 import USSLoader from './apps/shared/components/USSLoader'
 import MesaMediosApp from './apps/mesa-medios/MesaMediosApp'
+import MesaEditorialApp from './apps/mesa-editorial/MesaEditorialApp'
 import DashboardSelector from './apps/shared/DashboardSelector'
-
-// Placeholder — se reemplaza en Task 9
-function MesaEditorialApp({ onBackToSelector }) {
-  return (
-    <div className="fullscreen-center">
-      <div style={{ textAlign: 'center', padding: '2rem' }}>
-        <h2 style={{ color: '#0f2b41' }}>Mesa Editorial</h2>
-        <p style={{ color: '#64748b' }}>En construcción...</p>
-        <button className="btn-add" onClick={onBackToSelector} style={{ marginTop: '1rem' }}>
-          ← Volver al selector
-        </button>
-      </div>
-    </div>
-  )
-}
 
 
 export default function App() {
