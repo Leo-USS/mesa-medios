@@ -20,7 +20,7 @@ export default function DashboardSelector({ userName, userEmail, onSelect, onLog
         <div className="selector-header">
           <div className="selector-logo-wrap">
             <img
-              src="/mesa-medios/escudo-uss-horizontal-blanco.svg"
+              src="/escudo-uss-horizontal-blanco.svg"
               alt="Universidad San Sebastián"
               className="selector-logo"
             />

@@ -2646,6 +2646,19 @@ body {
   width: 100%;
 }
 
+/* Mobile: selectores más compactos */
+@media (max-width: 768px) {
+  .status-select {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.3rem;
+    min-height: 24px;
+  }
+
+  .status-wrap {
+    font-size: 0.65rem;
+  }
+}
+
 /* Delete button */
 .btn-delete-row {
   background: none;
