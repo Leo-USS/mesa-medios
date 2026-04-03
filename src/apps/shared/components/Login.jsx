@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../utils/supabase'
+import logoUSS from '../../../assets/escudo-uss-horizontal-blanco.svg'
 
 const COOLDOWN_SECONDS = 60
 
@@ -272,7 +273,7 @@ function PageFooter() {
         {/* ── Left: Logo ── */}
         <div className="footer-col footer-logo-col">
           <img
-            src="/mesa-medios/escudo-uss-horizontal-blanco.svg"
+            src={logoUSS}
             alt="Universidad San Sebastián"
             className="footer-uss-logo"
           />

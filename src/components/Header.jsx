@@ -1,3 +1,5 @@
+import logoUSS from '../assets/escudo-uss-horizontal-blanco.svg'
+
 export default function Header({ userName, userEmail, onAdd, onLogout, onShowLogs }) {
   const initials = userName
     ? userName.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase()
@@ -10,7 +12,7 @@ export default function Header({ userName, userEmail, onAdd, onLogout, onShowLog
         <div className="header-left">
           <div className="header-logo">
             <img
-              src="/mesa-medios/escudo-uss-horizontal-blanco.svg"
+              src={logoUSS}
               alt="USS"
               className="header-logo-img"
             />
