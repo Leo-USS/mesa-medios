@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import logoUSS from '../../../public/escudo-uss-horizontal-blanco.svg'
+import logoUSS from '../../../public/escudo-uss-horizontal-azul.svg'
 
 export default function DashboardSelector({ userName, userEmail, onSelect, onLogout }) {
   const [lastUsed, setLastUsed] = useState(null)

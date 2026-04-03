@@ -36,8 +36,9 @@ export default function AddActionModal({ onConfirm, onClose }) {
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-card" onClick={e => e.stopPropagation()}>
-        <div className="modal-header">
+      <div className="modal-content" onClick={e => e.stopPropagation()}>
+
+        <div className="modal-header" style={{ background: '#0f2b41', color: '#fff' }}>
           <h2>Nueva acción editorial</h2>
           <button className="modal-close" onClick={onClose} aria-label="Cerrar">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -45,50 +46,55 @@ export default function AddActionModal({ onConfirm, onClose }) {
             </svg>
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="modal-form">
-          <div className="form-row-2">
-            <div className="form-group">
-              <label>Eje</label>
-              <select value={eje} onChange={e => setEje(e.target.value)} ref={firstRef}>
-                {EJES.map(e => <option key={e.id} value={e.label}>{e.label}</option>)}
-              </select>
+
+        <form onSubmit={handleSubmit}>
+          <div className="modal-body">
+            <div className="form-row-2">
+              <div className="form-group">
+                <label>Eje</label>
+                <select value={eje} onChange={e => setEje(e.target.value)} ref={firstRef}>
+                  {EJES.map(e => <option key={e.id} value={e.label}>{e.label}</option>)}
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Tipo</label>
+                <select value={tipo} onChange={e => setTipo(e.target.value)}>
+                  {Object.keys(TIPOS_CONFIG).map(t => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </div>
             </div>
             <div className="form-group">
-              <label>Tipo</label>
-              <select value={tipo} onChange={e => setTipo(e.target.value)}>
-                {Object.keys(TIPOS_CONFIG).map(t => <option key={t} value={t}>{t}</option>)}
-              </select>
-            </div>
-          </div>
-          <div className="form-group">
-            <label>Tema</label>
-            <input type="text" value={tema} onChange={e => setTema(e.target.value)} placeholder="Tema general de la acción" />
-          </div>
-          <div className="form-group">
-            <label>Acción <span className="required">*</span></label>
-            <input type="text" value={accion} onChange={e => setAccion(e.target.value)} placeholder="Descripción específica de la acción" required />
-          </div>
-          <div className="form-row-2">
-            <div className="form-group">
-              <label>Canal</label>
-              <select value={tipoAccion} onChange={e => setTipoAccion(e.target.value)}>
-                {TIPO_ACCION_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
-              </select>
+              <label>Tema</label>
+              <input type="text" value={tema} onChange={e => setTema(e.target.value)} placeholder="Tema general de la acción" />
             </div>
             <div className="form-group">
-              <label>Fecha</label>
-              <input type="date" value={fecha} onChange={e => setFecha(e.target.value)} />
+              <label>Acción <span className="required">*</span></label>
+              <input type="text" value={accion} onChange={e => setAccion(e.target.value)} placeholder="Descripción específica de la acción" required />
+            </div>
+            <div className="form-row-2">
+              <div className="form-group">
+                <label>Canal</label>
+                <select value={tipoAccion} onChange={e => setTipoAccion(e.target.value)}>
+                  {TIPO_ACCION_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Fecha</label>
+                <input type="date" value={fecha} onChange={e => setFecha(e.target.value)} />
+              </div>
+            </div>
+            <div className="form-group">
+              <label>Responsable</label>
+              <input type="text" value={responsable} onChange={e => setResponsable(e.target.value)} placeholder="Nombre del responsable" />
             </div>
           </div>
-          <div className="form-group">
-            <label>Responsable</label>
-            <input type="text" value={responsable} onChange={e => setResponsable(e.target.value)} placeholder="Nombre del responsable" />
-          </div>
-          <div className="modal-actions">
-            <button type="button" className="btn-ghost-cancel" onClick={onClose}>Cancelar</button>
-            <button type="submit" className="btn-add" disabled={!accion.trim()}>Agregar acción</button>
+
+          <div className="modal-footer">
+            <button type="button" className="btn-secondary" onClick={onClose}>Cancelar</button>
+            <button type="submit" className="btn-primary" disabled={!accion.trim()}>Agregar acción</button>
           </div>
         </form>
+
       </div>
     </div>
   )

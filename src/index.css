@@ -2247,8 +2247,9 @@ body {
 }
 
 .selector-logo {
-  height: 40px;
-  filter: brightness(0) saturate(100%) invert(15%) sepia(40%) saturate(600%) hue-rotate(180deg);
+  height: 44px;
+  width: auto;
+  margin-bottom: 24px;
 }
 
 .selector-title {
@@ -2749,3 +2750,46 @@ body {
 
 /* Required field marker */
 .required { color: #dc2626; }
+
+/* Modal styles - compartidos por ambas mesas */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  max-width: 520px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  padding: 1rem 1.5rem;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
