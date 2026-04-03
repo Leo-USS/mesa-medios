@@ -40,10 +40,12 @@ export default function App() {
       setAuthorized(true)
       setUserName(data.nombre || email)
       await supabase.from('audit_logs').insert([{
-        mesa_type: null,
+        mesa_type:  null,
         user_email: email.toLowerCase(),
-        action: 'login',
-        table_name: 'users',
+        action:     'login',
+        table_name: null,
+        record_id:  null,
+        details:    'Inició sesión',
       }])
       const last = localStorage.getItem('uss_last_dashboard')
       if (last) setSelectedDashboard(last)

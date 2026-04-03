@@ -84,11 +84,14 @@ export default function MesaMediosApp({ session, userName, onLogout, onBackToSel
 
   async function logAction(accion, contenidoId, contenidoNombre, detalle = '') {
     if (!session) return
+    const actionMap = { AGREGAR: 'create', MODIFICAR: 'update', ELIMINAR: 'delete', LOGIN: 'login' }
     await supabase.from('audit_logs').insert([{
       mesa_type:  'medios',
       user_email: session.user.email,
-      action:     accion,
+      action:     actionMap[accion] || accion.toLowerCase(),
       table_name: 'mesa_medios_contenidos',
+      record_id:  contenidoId || null,
+      details:    detalle || null,
     }])
   }
 

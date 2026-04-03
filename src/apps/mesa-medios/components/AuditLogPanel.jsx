@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../shared/utils/supabase'
 
 const ACTION_STYLE = {
-  LOGIN:     { bg: '#dbeafe', text: '#1e40af', label: 'Ingreso' },
-  AGREGAR:   { bg: '#c6efce', text: '#276221', label: 'Agregó' },
-  MODIFICAR: { bg: '#fff2cc', text: '#7d5a00', label: 'Modificó' },
-  ELIMINAR:  { bg: '#ffc7ce', text: '#8b0000', label: 'Eliminó' },
+  login:  { bg: '#dbeafe', text: '#1e40af', label: 'Ingreso' },
+  create: { bg: '#c6efce', text: '#276221', label: 'Agregó' },
+  update: { bg: '#fff2cc', text: '#7d5a00', label: 'Modificó' },
+  delete: { bg: '#ffc7ce', text: '#8b0000', label: 'Eliminó' },
 }
 
 function useIsMobile() {
@@ -42,7 +42,7 @@ export default function AuditLogPanel({ onClose, mesaType }) {
 
   const filtered = filter === 'TODOS'
     ? logs
-    : logs.filter(l => l.accion === filter)
+    : logs.filter(l => l.action === filter)
 
   function formatDate(iso) {
     return new Date(iso).toLocaleString('es-CL', {
@@ -60,7 +60,7 @@ export default function AuditLogPanel({ onClose, mesaType }) {
 
   const filterButtons = (
     <div className="logs-filters">
-      {['TODOS', 'AGREGAR', 'MODIFICAR', 'ELIMINAR'].map(f => (
+      {['TODOS', 'create', 'update', 'delete'].map(f => (
         <button
           key={f}
           className={`filter-btn ${filter === f ? 'active' : ''}`}
@@ -95,7 +95,7 @@ export default function AuditLogPanel({ onClose, mesaType }) {
           ) : (
             <div className="logs-cards">
               {filtered.map(log => {
-                const style = ACTION_STYLE[log.accion] || { bg: '#f0f4fb', text: '#1a2b3c', label: log.accion }
+                const style = ACTION_STYLE[log.action] || { bg: '#f0f4fb', text: '#1a2b3c', label: log.action }
                 return (
                   <div key={log.id} className="log-card">
                     <div className="log-card-top">
@@ -104,12 +104,12 @@ export default function AuditLogPanel({ onClose, mesaType }) {
                       </span>
                       <span className="log-card-date">{formatDateShort(log.created_at)}</span>
                     </div>
-                    <div className="log-card-user">{log.user_nombre}</div>
-                    {log.contenido_nombre && (
-                      <div className="log-card-contenido">{log.contenido_nombre}</div>
+                    <div className="log-card-user">{log.user_email}</div>
+                    {log.record_id && (
+                      <div className="log-card-contenido">ID: {log.record_id}</div>
                     )}
-                    {log.detalle && (
-                      <div className="log-card-detalle">{log.detalle}</div>
+                    {log.details && (
+                      <div className="log-card-detalle">{log.details}</div>
                     )}
                   </div>
                 )
@@ -156,12 +156,11 @@ export default function AuditLogPanel({ onClose, mesaType }) {
               </thead>
               <tbody>
                 {filtered.map(log => {
-                  const style = ACTION_STYLE[log.accion] || { bg: '#f0f4fb', text: '#1a2b3c', label: log.accion }
+                  const style = ACTION_STYLE[log.action] || { bg: '#f0f4fb', text: '#1a2b3c', label: log.action }
                   return (
                     <tr key={log.id}>
                       <td className="log-date">{formatDate(log.created_at)}</td>
                       <td className="log-user">
-                        <div className="log-user-name">{log.user_nombre}</div>
                         <div className="log-user-email">{log.user_email}</div>
                       </td>
                       <td>
@@ -169,8 +168,8 @@ export default function AuditLogPanel({ onClose, mesaType }) {
                           {style.label}
                         </span>
                       </td>
-                      <td className="log-contenido">{log.contenido_nombre || '—'}</td>
-                      <td className="log-detalle">{log.detalle || '—'}</td>
+                      <td className="log-contenido">{log.record_id || '—'}</td>
+                      <td className="log-detalle">{log.details || '—'}</td>
                     </tr>
                   )
                 })}
