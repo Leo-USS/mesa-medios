@@ -85,7 +85,7 @@ export default function MesaEditorialApp({ session, userName, onLogout, onBackTo
       action:     actionMap[accion] || accion.toLowerCase(),
       table_name: 'mesa_editorial_acciones',
       record_id:  itemId || null,
-      details:    detalle || null,
+      details:    JSON.stringify({ content_name: itemNombre || null, description: detalle || null }),
     }])
   }
 

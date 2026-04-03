@@ -91,7 +91,7 @@ export default function MesaMediosApp({ session, userName, onLogout, onBackToSel
       action:     actionMap[accion] || accion.toLowerCase(),
       table_name: 'mesa_medios_contenidos',
       record_id:  contenidoId || null,
-      details:    detalle || null,
+      details:    JSON.stringify({ content_name: contenidoNombre || null, description: detalle || null }),
     }])
   }
 

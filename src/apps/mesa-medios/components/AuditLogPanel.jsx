@@ -8,6 +8,10 @@ const ACTION_STYLE = {
   delete: { bg: '#ffc7ce', text: '#8b0000', label: 'Eliminó' },
 }
 
+function parseDetails(details) {
+  try { return JSON.parse(details) } catch { return {} }
+}
+
 function useIsMobile() {
   const [mobile, setMobile] = useState(window.innerWidth <= 768)
   useEffect(() => {
@@ -96,6 +100,7 @@ export default function AuditLogPanel({ onClose, mesaType }) {
             <div className="logs-cards">
               {filtered.map(log => {
                 const style = ACTION_STYLE[log.action] || { bg: '#f0f4fb', text: '#1a2b3c', label: log.action }
+                const d = parseDetails(log.details)
                 return (
                   <div key={log.id} className="log-card">
                     <div className="log-card-top">
@@ -105,11 +110,11 @@ export default function AuditLogPanel({ onClose, mesaType }) {
                       <span className="log-card-date">{formatDateShort(log.created_at)}</span>
                     </div>
                     <div className="log-card-user">{log.user_email}</div>
-                    {log.record_id && (
-                      <div className="log-card-contenido">ID: {log.record_id}</div>
+                    {d.content_name && (
+                      <div className="log-card-contenido">{d.content_name}</div>
                     )}
-                    {log.details && (
-                      <div className="log-card-detalle">{log.details}</div>
+                    {d.description && (
+                      <div className="log-card-detalle">{d.description}</div>
                     )}
                   </div>
                 )
@@ -157,6 +162,7 @@ export default function AuditLogPanel({ onClose, mesaType }) {
               <tbody>
                 {filtered.map(log => {
                   const style = ACTION_STYLE[log.action] || { bg: '#f0f4fb', text: '#1a2b3c', label: log.action }
+                  const d = parseDetails(log.details)
                   return (
                     <tr key={log.id}>
                       <td className="log-date">{formatDate(log.created_at)}</td>
@@ -168,8 +174,8 @@ export default function AuditLogPanel({ onClose, mesaType }) {
                           {style.label}
                         </span>
                       </td>
-                      <td className="log-contenido">{log.record_id || '—'}</td>
-                      <td className="log-detalle">{log.details || '—'}</td>
+                      <td className="log-contenido">{d.content_name || '—'}</td>
+                      <td className="log-detalle">{d.description || '—'}</td>
                     </tr>
                   )
                 })}
