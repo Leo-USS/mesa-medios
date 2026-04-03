@@ -8,7 +8,17 @@
       "Bash(mkdir -p src/apps/mesa-editorial/components)",
       "Bash(mkdir -p src/apps/shared/components)",
       "Bash(mkdir -p src/apps/shared/hooks)",
-      "Bash(mkdir -p src/apps/shared/utils)"
+      "Bash(mkdir -p src/apps/shared/utils)",
+      "Bash(cp /c/Users/leopu/Desktop/Trabajo/USS/mesa-medios-main/src/hooks/useToast.js /c/Users/leopu/Desktop/Trabajo/USS/mesa-medios-main/src/apps/shared/hooks/useToast.js)",
+      "Bash(cp /c/Users/leopu/Desktop/Trabajo/USS/mesa-medios-main/src/hooks/useDebounce.js /c/Users/leopu/Desktop/Trabajo/USS/mesa-medios-main/src/apps/shared/hooks/useDebounce.js)",
+      "Bash(cp /c/Users/leopu/Desktop/Trabajo/USS/mesa-medios-main/src/components/Toaster.jsx /c/Users/leopu/Desktop/Trabajo/USS/mesa-medios-main/src/apps/shared/components/Toaster.jsx)",
+      "Bash(cp /c/Users/leopu/Desktop/Trabajo/USS/mesa-medios-main/src/components/ConfirmDialog.jsx /c/Users/leopu/Desktop/Trabajo/USS/mesa-medios-main/src/apps/shared/components/ConfirmDialog.jsx)",
+      "Bash(cp /c/Users/leopu/Desktop/Trabajo/USS/mesa-medios-main/src/components/USSLoader.jsx /c/Users/leopu/Desktop/Trabajo/USS/mesa-medios-main/src/apps/shared/components/USSLoader.jsx)",
+      "Bash(timeout 10 npm run dev -- --port 5173)",
+      "Bash(npx vite:*)",
+      "Bash(npm run:*)",
+      "Bash(pkill -f \"vite.*5173\")",
+      "Bash(xargs kill:*)"
     ]
   }
 }

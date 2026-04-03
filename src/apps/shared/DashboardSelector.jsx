@@ -18,11 +18,13 @@ export default function DashboardSelector({ userName, userEmail, onSelect, onLog
 
         {/* Header */}
         <div className="selector-header">
-          <img
-            src="/mesa-medios/escudo-uss-horizontal-blanco.svg"
-            alt="Universidad San Sebastián"
-            className="selector-logo"
-          />
+          <div className="selector-logo-wrap">
+            <img
+              src="/mesa-medios/escudo-uss-horizontal-blanco.svg"
+              alt="Universidad San Sebastián"
+              className="selector-logo"
+            />
+          </div>
           <h1 className="selector-title">Sistema de Gestión USS</h1>
           <p className="selector-subtitle">Selecciona tu mesa de trabajo</p>
         </div>
