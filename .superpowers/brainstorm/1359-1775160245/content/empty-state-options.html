@@ -1,0 +1,273 @@
+<h2>Quick Win #6 — Empty States</h2>
+<p class="subtitle">¿Cómo debe verse la tabla cuando no hay contenidos o el filtro no encuentra resultados? Hay dos contextos distintos.</p>
+
+<style>
+  body { font-family: 'Inter', system-ui, sans-serif; }
+  .context-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #5a7a96;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .table-shell {
+    border: 1px solid #d0dce8;
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+    margin-bottom: 6px;
+  }
+  .table-head {
+    background: #0f2b41;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+  }
+  .th { height: 8px; border-radius: 3px; background: rgba(255,255,255,.25); }
+  .table-body-empty {
+    padding: 0;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* OPTION A — Minimal con ícono CSS */
+  .empty-a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 24px 16px;
+    text-align: center;
+  }
+  .icon-box {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: #e8f0f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .empty-title { font-size: 13px; font-weight: 600; color: #1a2b3c; margin: 0; }
+  .empty-sub   { font-size: 12px; color: #5a7a96; margin: 0; }
+  .empty-cta {
+    margin-top: 4px;
+    padding: 6px 14px;
+    background: #ceb37c;
+    color: #0f2b41;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .empty-cta-ghost {
+    margin-top: 4px;
+    padding: 6px 14px;
+    background: transparent;
+    color: #275da5;
+    border: 1px solid #275da5;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* OPTION B — Ilustración SVG inline */
+  .empty-b {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 24px 16px;
+    text-align: center;
+  }
+
+  /* OPTION C — Inline dentro de la fila */
+  .empty-c {
+    width: 100%;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .empty-c-icon {
+    font-size: 24px;
+    opacity: .5;
+  }
+  .empty-c-text { text-align: left; }
+
+  .option-tag {
+    display: inline-block;
+    background: #0f2b41;
+    color: #ceb37c;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: .05em;
+  }
+  .split-preview { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .mini-label { font-size: 10px; color: #275da5; font-weight: 600; margin-bottom: 4px; }
+</style>
+
+<div class="cards">
+
+  <!-- OPTION A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <span class="option-tag">OPCIÓN A — Recomendada</span>
+      <div class="split-preview">
+        <div>
+          <div class="mini-label">Sin contenidos aún</div>
+          <div class="table-shell">
+            <div class="table-head">
+              <div class="th" style="width:80px"></div>
+              <div class="th" style="width:50px"></div>
+              <div class="th" style="width:40px"></div>
+            </div>
+            <div class="table-body-empty">
+              <div class="empty-a">
+                <div class="icon-box">📋</div>
+                <p class="empty-title">Sin contenidos aún</p>
+                <p class="empty-sub">Crea el primer contenido<br>para esta semana</p>
+                <button class="empty-cta">+ Agregar contenido</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="mini-label">Filtro sin resultados</div>
+          <div class="table-shell">
+            <div class="table-head">
+              <div class="th" style="width:80px"></div>
+              <div class="th" style="width:50px"></div>
+              <div class="th" style="width:40px"></div>
+            </div>
+            <div class="table-body-empty">
+              <div class="empty-a">
+                <div class="icon-box">🔍</div>
+                <p class="empty-title">Sin resultados</p>
+                <p class="empty-sub">No hay contenidos con<br>"admisión postg…"</p>
+                <button class="empty-cta-ghost">Limpiar búsqueda</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Ícono emoji + texto contextual + CTA</h3>
+      <p>Simple, contextual y accionable. Diferencia el estado "vacío real" del "filtro sin match". Sin dependencias, CSS puro.</p>
+    </div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <span class="option-tag">OPCIÓN B</span>
+      <div class="split-preview">
+        <div>
+          <div class="mini-label">Sin contenidos aún</div>
+          <div class="table-shell">
+            <div class="table-head">
+              <div class="th" style="width:80px"></div>
+              <div class="th" style="width:50px"></div>
+            </div>
+            <div class="table-body-empty">
+              <div class="empty-b">
+                <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                  <rect width="56" height="56" rx="12" fill="#e8f0f8"/>
+                  <rect x="12" y="16" width="32" height="4" rx="2" fill="#275da5" opacity=".4"/>
+                  <rect x="12" y="24" width="24" height="3" rx="1.5" fill="#d0dce8"/>
+                  <rect x="12" y="30" width="28" height="3" rx="1.5" fill="#d0dce8"/>
+                  <rect x="12" y="36" width="20" height="3" rx="1.5" fill="#d0dce8"/>
+                  <circle cx="42" cy="38" r="9" fill="#ceb37c"/>
+                  <text x="42" y="42" text-anchor="middle" font-size="12" fill="#0f2b41" font-weight="bold">+</text>
+                </svg>
+                <p class="empty-title">Comienza planificando</p>
+                <p class="empty-sub" style="font-size:11px">Agrega el primer contenido</p>
+                <button class="empty-cta" style="font-size:11px">+ Nuevo contenido</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="mini-label">Filtro sin resultados</div>
+          <div class="table-shell">
+            <div class="table-head">
+              <div class="th" style="width:80px"></div>
+              <div class="th" style="width:50px"></div>
+            </div>
+            <div class="table-body-empty">
+              <div class="empty-b">
+                <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                  <rect width="56" height="56" rx="12" fill="#e8f0f8"/>
+                  <circle cx="25" cy="25" r="10" stroke="#275da5" stroke-width="3" fill="none" opacity=".5"/>
+                  <line x1="32" y1="32" x2="42" y2="42" stroke="#275da5" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+                  <line x1="22" y1="25" x2="28" y2="25" stroke="#b91c1c" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <p class="empty-title">Sin coincidencias</p>
+                <p class="empty-sub" style="font-size:11px">Prueba con otro término</p>
+                <button class="empty-cta-ghost" style="font-size:11px">✕ Limpiar filtro</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Ilustración SVG inline + texto + CTA</h3>
+      <p>Más pulido visualmente. SVG inline sin imágenes externas. Más esfuerzo de implementación pero mayor calidad percibida.</p>
+    </div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <span class="option-tag">OPCIÓN C — Minimalista</span>
+      <div class="table-shell" style="margin-bottom:8px">
+        <div class="table-head">
+          <div class="th" style="width:80px"></div>
+          <div class="th" style="width:50px"></div>
+          <div class="th" style="width:40px"></div>
+        </div>
+        <div class="table-body-empty" style="min-height:80px">
+          <div class="empty-c">
+            <span class="empty-c-icon">📭</span>
+            <div class="empty-c-text">
+              <p class="empty-title" style="font-size:12px">Sin contenidos para mostrar</p>
+              <p class="empty-sub" style="font-size:11px">Usa "+ Agregar contenido" para comenzar</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-shell">
+        <div class="table-head">
+          <div class="th" style="width:80px"></div>
+          <div class="th" style="width:50px"></div>
+          <div class="th" style="width:40px"></div>
+        </div>
+        <div class="table-body-empty" style="min-height:80px">
+          <div class="empty-c">
+            <span class="empty-c-icon">🔍</span>
+            <div class="empty-c-text">
+              <p class="empty-title" style="font-size:12px">Sin resultados para "admisión"</p>
+              <p class="empty-sub" style="font-size:11px; color:#275da5; cursor:pointer; text-decoration:underline">Limpiar búsqueda</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Texto inline alineado a la izquierda</h3>
+      <p>Mínimo esfuerzo. Sin centrado, sin ilustraciones. Consistente con el estilo tabular. Sin distracciones visuales.</p>
+    </div>
+  </div>
+
+</div>

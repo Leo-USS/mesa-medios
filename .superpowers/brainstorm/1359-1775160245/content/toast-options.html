@@ -1,0 +1,176 @@
+<h2>Quick Win #1 — Toast Notifications</h2>
+<p class="subtitle">¿Dónde y cómo deben aparecer los mensajes? Selecciona tu opción preferida.</p>
+
+<style>
+  .preview-area {
+    background: #e8f0f8;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+    min-height: 160px;
+    position: relative;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow: hidden;
+  }
+  .fake-header {
+    background: #0f2b41;
+    border-bottom: 3px solid #ceb37c;
+    border-radius: 8px 8px 0 0;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 8px;
+    margin: -20px -20px 12px -20px;
+  }
+  .fake-logo { width: 60px; height: 12px; background: rgba(255,255,255,.3); border-radius: 3px; }
+  .fake-title { width: 120px; height: 10px; background: rgba(255,255,255,.2); border-radius: 3px; }
+  .fake-row { height: 32px; background: white; border-radius: 4px; margin-bottom: 6px; opacity: .7; }
+
+  /* OPTION A — Bottom Right */
+  .toast-br {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  /* OPTION B — Top Right */
+  .toast-tr {
+    position: absolute;
+    top: 60px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  /* OPTION C — Bottom Center */
+  .toast-bc {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .toast-pill {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 3px 12px rgba(0,0,0,.15);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .t-success { background: #f0fdf4; color: #166534; border-left: 4px solid #22c55e; }
+  .t-error   { background: #fef2f2; color: #b91c1c; border-left: 4px solid #dc2626; }
+  .t-info    { background: #eff6ff; color: #1e40af; border-left: 4px solid #3b82f6; }
+
+  /* Left-side bar variant */
+  .t-bar { border-left: none; border-top: 3px solid; padding: 6px 12px; }
+  .t-bar.t-success { border-color: #22c55e; }
+  .t-bar.t-error   { border-color: #dc2626; }
+
+  .option-tag {
+    display: inline-block;
+    background: #0f2b41;
+    color: #ceb37c;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 6px;
+    letter-spacing: .05em;
+  }
+</style>
+
+<div class="cards">
+
+  <!-- OPTION A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <span class="option-tag">OPCIÓN A — Recomendada</span>
+      <div class="preview-area">
+        <div class="fake-header">
+          <div class="fake-logo"></div>
+          <div class="fake-title"></div>
+        </div>
+        <div class="fake-row"></div>
+        <div class="fake-row" style="width:85%"></div>
+        <div class="fake-row" style="width:70%"></div>
+        <div class="toast-br">
+          <div class="toast-pill t-success">✓ Cambio guardado</div>
+          <div class="toast-pill t-error">✕ Error al guardar. Reintentando…</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Bottom-right · Con borde izquierdo de color</h3>
+      <p>Posición estándar (Gmail, Notion, Linear). No interfiere con el header ni la tabla. Desaparece solo en 4 segundos.</p>
+    </div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <span class="option-tag">OPCIÓN B</span>
+      <div class="preview-area">
+        <div class="fake-header">
+          <div class="fake-logo"></div>
+          <div class="fake-title"></div>
+        </div>
+        <div class="fake-row"></div>
+        <div class="fake-row" style="width:85%"></div>
+        <div class="fake-row" style="width:70%"></div>
+        <div class="toast-tr">
+          <div class="toast-pill t-success">✓ Cambio guardado</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Top-right · Cerca del header</h3>
+      <p>Más notorio pero puede tapar contenido de la tabla. Riesgo de superposición con el header sticky.</p>
+    </div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <span class="option-tag">OPCIÓN C</span>
+      <div class="preview-area">
+        <div class="fake-header">
+          <div class="fake-logo"></div>
+          <div class="fake-title"></div>
+        </div>
+        <div class="fake-row"></div>
+        <div class="fake-row" style="width:85%"></div>
+        <div class="fake-row" style="width:70%"></div>
+        <div class="toast-bc">
+          <div class="toast-pill t-success" style="border-left:none; border-bottom: 3px solid #22c55e; border-radius:8px 8px 0 0;">✓ Cambio guardado</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Bottom-center · Estilo "snackbar"</h3>
+      <p>Material Design / Android style. Más centrado. Puede interferir con la barra de scroll horizontal de la tabla.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top:16px; padding:14px; background:#f8fafc; border-radius:8px; border:1px solid #e2e8f0;">
+  <p class="label">Comportamiento común a todas las opciones</p>
+  <ul style="margin:6px 0 0; padding-left:18px; font-size:14px; color:#4a5568; line-height:1.7">
+    <li><strong>Auto-dismiss en 4 segundos</strong> (errores: 6 segundos)</li>
+    <li><strong>Máximo 3 toasts</strong> apilados simultáneamente</li>
+    <li>El usuario <strong>puede hacer click para cerrar</strong> antes del tiempo</li>
+    <li>Animación de entrada: slide-in desde el borde</li>
+    <li>Colores USS preservados para acciones exitosas</li>
+  </ul>
+</div>

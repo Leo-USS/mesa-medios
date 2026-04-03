@@ -1,0 +1,251 @@
+<h2>Quick Win #5 — Indicador de Progreso por Fila</h2>
+<p class="subtitle">¿Cómo mostrar cuántos medios están confirmados? Cada fila de la tabla representa un contenido con hasta 32 medios.</p>
+
+<style>
+  body { font-family: 'Inter', system-ui, sans-serif; }
+  .table-mock {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    margin-bottom: 8px;
+  }
+  .table-mock th {
+    background: #0f2b41;
+    color: white;
+    padding: 8px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: left;
+    letter-spacing: .04em;
+  }
+  .table-mock td {
+    background: white;
+    padding: 8px 10px;
+    font-size: 12px;
+    border-bottom: 1px solid #e8f0f8;
+    vertical-align: middle;
+  }
+  .table-mock tr:nth-child(even) td { background: #f0f6fc; }
+  .cell-si    { background: #c6efce; color: #276221; border-radius: 3px; padding: 2px 5px; font-size: 10px; font-weight: 600; }
+  .cell-pd    { background: #fff2cc; color: #7d5a00; border-radius: 3px; padding: 2px 5px; font-size: 10px; font-weight: 600; }
+  .cell-no    { background: #ffc7ce; color: #8b0000; border-radius: 3px; padding: 2px 5px; font-size: 10px; font-weight: 600; }
+  .cell-empty { background: #f5f5f5; border-radius: 3px; padding: 2px 5px; font-size: 10px; color: #aaa; }
+
+  /* OPTION A — Mini bar debajo del nombre */
+  .name-cell-a { display: flex; flex-direction: column; gap: 4px; }
+  .progress-bar-a { height: 5px; background: #e8f0f8; border-radius: 3px; width: 100%; }
+  .progress-fill-green { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #22c55e, #16a34a); }
+  .progress-label-a { font-size: 10px; color: #5a7a96; }
+
+  /* OPTION B — Columna dedicada con badge */
+  .badge-progress {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-high   { background: #dcfce7; color: #166534; }
+  .badge-mid    { background: #fef9c3; color: #854d0e; }
+  .badge-low    { background: #fee2e2; color: #991b1b; }
+  .mini-donut { width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid currentColor; position: relative; }
+
+  /* OPTION C — Puntos de colores compactos */
+  .dot-row { display: flex; gap: 2px; flex-wrap: wrap; max-width: 110px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .dot-green { background: #22c55e; }
+  .dot-yellow { background: #f59e0b; }
+  .dot-red { background: #ef4444; }
+  .dot-gray { background: #d1d5db; }
+
+  .option-tag {
+    display: inline-block;
+    background: #0f2b41;
+    color: #ceb37c;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: .05em;
+  }
+</style>
+
+<div class="cards">
+
+  <!-- OPTION A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <span class="option-tag">OPCIÓN A — Recomendada</span>
+      <table class="table-mock">
+        <thead>
+          <tr>
+            <th style="min-width:140px">Contenido</th>
+            <th>Semana</th>
+            <th>Mailing</th>
+            <th>Web</th>
+            <th>RRSS</th>
+            <th>…</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="name-cell-a">
+                <span>Admisión 2025</span>
+                <div>
+                  <div class="progress-bar-a"><div class="progress-fill-green" style="width:75%"></div></div>
+                  <span class="progress-label-a">24/32 medios · 75%</span>
+                </div>
+              </div>
+            </td>
+            <td>Sem 14</td>
+            <td><span class="cell-si">si</span></td>
+            <td><span class="cell-si">si</span></td>
+            <td><span class="cell-pd">pd</span></td>
+            <td style="color:#aaa; font-size:11px">…</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="name-cell-a">
+                <span>Titulación Dic</span>
+                <div>
+                  <div class="progress-bar-a"><div class="progress-fill-green" style="width:31%; background: linear-gradient(90deg,#f59e0b,#d97706)"></div></div>
+                  <span class="progress-label-a">10/32 medios · 31%</span>
+                </div>
+              </div>
+            </td>
+            <td>Sem 15</td>
+            <td><span class="cell-pd">pd</span></td>
+            <td><span class="cell-empty">—</span></td>
+            <td><span class="cell-si">si</span></td>
+            <td style="color:#aaa; font-size:11px">…</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-body">
+      <h3>Mini barra dentro de la columna "Contenido"</h3>
+      <p>Sin columna nueva — el progreso vive con el nombre. Color varía de verde (alto) a amarillo (bajo). No cambia el ancho de la tabla.</p>
+    </div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <span class="option-tag">OPCIÓN B</span>
+      <table class="table-mock">
+        <thead>
+          <tr>
+            <th style="min-width:120px">Contenido</th>
+            <th>Semana</th>
+            <th style="min-width:90px">Progreso</th>
+            <th>Mailing</th>
+            <th>RRSS</th>
+            <th>…</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Admisión 2025</td>
+            <td>Sem 14</td>
+            <td><span class="badge-progress badge-high">● 24/32</span></td>
+            <td><span class="cell-si">si</span></td>
+            <td><span class="cell-pd">pd</span></td>
+            <td style="color:#aaa; font-size:11px">…</td>
+          </tr>
+          <tr>
+            <td>Titulación Dic</td>
+            <td>Sem 15</td>
+            <td><span class="badge-progress badge-mid">● 10/32</span></td>
+            <td><span class="cell-pd">pd</span></td>
+            <td><span class="cell-si">si</span></td>
+            <td style="color:#aaa; font-size:11px">…</td>
+          </tr>
+          <tr>
+            <td>Open Day</td>
+            <td>Sem 16</td>
+            <td><span class="badge-progress badge-low">● 3/32</span></td>
+            <td><span class="cell-empty">—</span></td>
+            <td><span class="cell-empty">—</span></td>
+            <td style="color:#aaa; font-size:11px">…</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-body">
+      <h3>Columna dedicada "Progreso" con badge</h3>
+      <p>Más visible y ordenable. Suma una columna sticky extra antes de los medios. Fácil de comparar entre filas.</p>
+    </div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <span class="option-tag">OPCIÓN C</span>
+      <table class="table-mock">
+        <thead>
+          <tr>
+            <th style="min-width:120px">Contenido</th>
+            <th>Semana</th>
+            <th>Mailing</th>
+            <th>Web</th>
+            <th>RRSS</th>
+            <th>…</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div style="display:flex; flex-direction:column; gap:5px">
+                <span>Admisión 2025</span>
+                <div class="dot-row" title="24 confirmados, 4 por definir, 4 no aplica, 0 vacíos">
+                  <div class="dot dot-green"></div><div class="dot dot-green"></div><div class="dot dot-green"></div>
+                  <div class="dot dot-green"></div><div class="dot dot-green"></div><div class="dot dot-green"></div>
+                  <div class="dot dot-green"></div><div class="dot dot-green"></div><div class="dot dot-green"></div>
+                  <div class="dot dot-yellow"></div><div class="dot dot-yellow"></div><div class="dot dot-yellow"></div>
+                  <div class="dot dot-red"></div><div class="dot dot-red"></div>
+                  <div class="dot dot-gray"></div><div class="dot dot-gray"></div>
+                </div>
+              </div>
+            </td>
+            <td>Sem 14</td>
+            <td><span class="cell-si">si</span></td>
+            <td><span class="cell-si">si</span></td>
+            <td><span class="cell-pd">pd</span></td>
+            <td style="color:#aaa; font-size:11px">…</td>
+          </tr>
+          <tr>
+            <td>
+              <div style="display:flex; flex-direction:column; gap:5px">
+                <span>Titulación Dic</span>
+                <div class="dot-row">
+                  <div class="dot dot-green"></div><div class="dot dot-green"></div><div class="dot dot-green"></div>
+                  <div class="dot dot-yellow"></div><div class="dot dot-yellow"></div>
+                  <div class="dot dot-gray"></div><div class="dot dot-gray"></div><div class="dot dot-gray"></div>
+                  <div class="dot dot-gray"></div><div class="dot dot-gray"></div><div class="dot dot-gray"></div>
+                </div>
+              </div>
+            </td>
+            <td>Sem 15</td>
+            <td><span class="cell-pd">pd</span></td>
+            <td><span class="cell-empty">—</span></td>
+            <td><span class="cell-si">si</span></td>
+            <td style="color:#aaa; font-size:11px">…</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-body">
+      <h3>Mapa de puntos de colores</h3>
+      <p>Muy visual — cada punto representa un medio. Verde = si, amarillo = pd, rojo = no, gris = vacío. Compacto pero denso de información.</p>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(node:*)",
+      "Bash(mkdir -p src/apps/mesa-medios/components)",
+      "Bash(mkdir -p src/apps/mesa-editorial/components)",
+      "Bash(mkdir -p src/apps/shared/components)",
+      "Bash(mkdir -p src/apps/shared/hooks)",
+      "Bash(mkdir -p src/apps/shared/utils)"
+    ]
+  }
+}
